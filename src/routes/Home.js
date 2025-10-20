@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Movie from '../components/Movie';
+import styles from '../Home.module.css';
 
 function Home() {
     const [loading, setLoading] = useState(true);
@@ -16,23 +17,38 @@ function Home() {
     }, []);
     console.log(movies);
     return (
-      <div>{loading ? 
-      (<h1>Loading...</h1>) : 
-      (
-        <div>
-          {movies.map((movie) => (
-            <Movie 
-              key={movie.id}
-              id={movie.id}
-              medium_cover_image={movie.medium_cover_image} 
-              title={movie.title} 
-              summary={movie.summary} 
-              genres={movie.genres} 
-            />
-            ))}
+      <div className={styles.home}>
+        <div className={styles.hero}>
+          <div className={styles.heroContent}>
+            <h1 className={styles.heroTitle}>Joshua's Movie App</h1>
+            <p className={styles.heroSubtitle}>Find your favorite movies</p>
+          </div>
+        </div>
+        
+        {loading ? (
+          <div className={styles.loadingContainer}>
+            <div className={styles.loadingText}>Loading...</div>
+            <div className={styles.loadingSpinner}></div>
+          </div>
+        ) : (
+          <div className={styles.moviesSection} id="movies">
+            <h2 className={styles.sectionTitle}>Popular Movies</h2>
+            <div className={styles.moviesGrid}>
+              {movies.map((movie) => (
+                <Movie 
+                  key={movie.id}
+                  id={movie.id}
+                  medium_cover_image={movie.medium_cover_image} 
+                  title={movie.title} 
+                  summary={movie.summary} 
+                  genres={movie.genres} 
+                />
+              ))}
+            </div>
           </div>
         )}
-    </div>);
+      </div>
+    );
   }
 
 export default Home;
